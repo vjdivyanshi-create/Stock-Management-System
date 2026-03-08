@@ -39,10 +39,10 @@
                 </div>
             </div>
             <nav class="flex items-center gap-6">
-                <button class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition">
-                    <i class="fas fa-bell"></i>
-                    <span class="text-xs">Alerts</span>
-                </button>
+                <button onclick="checkAlerts()" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 transition">
+    <i class="fas fa-bell"></i>
+    <span class="text-xs">Alerts</span>
+</button>
                 <a href="login_page.html" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 hover:text-red-700 transition text-sm font-medium">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="hidden sm:inline">Logout</span>
@@ -63,40 +63,42 @@
                 <nav class="space-y-1">
                     <h3 class="text-xs font-semibold text-slate-600 uppercase tracking-wider px-3 mb-4">Main Menu</h3>
                     
-                    <a href="dashboard.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg bg-blue-100/80 text-blue-700 border border-blue-300/30">
-                        <i class="fas fa-chart-line w-5"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    
-                    <a href="inventory.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100">
-                        <i class="fas fa-list w-5"></i>
-                        <span>Inventory List</span>
-                    </a>
+                   <a href="dashboard.html"
+class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-blue-100 hover:text-blue-700 transition">
+<i class="fas fa-chart-line w-5"></i>
+<span>Dashboard</span>
+</a>
+                   <a href="inventory.html"
+class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-blue-100 hover:text-blue-700 transition">
+<i class="fas fa-list w-5"></i>
+<span>Inventory List</span>
+</a>
+            
+                       
 
-                    <a href="Add_product.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100">
-                        <i class="fas fa-box w-5"></i>
-                        <span>Add Product</span>
-                    </a>
+                   <a href="Add_product.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-blue-100 hover:text-blue-700">
+    <i class="fas fa-box w-5"></i>
+    <span>Add Product</span>
+</a>
                     
-                    <a href="report.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100">
-                        <i class="fas fa-chart-bar w-5"></i>
-                        <span>Report</span>
-                    </a>
-                    
+                    <a href="report.html"
+class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-blue-100 hover:text-blue-700 transition">
+<i class="fas fa-chart-bar w-5"></i>
+<span>Report</span>
+</a>
                 </nav>
 
                 <nav class="space-y-1">
                     <h3 class="text-xs font-semibold text-slate-600 uppercase tracking-wider px-3 mb-4">Tools</h3>
+                   <a href="setting.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-blue-100 hover:text-blue-700">
+    <i class="fas fa-cog w-5"></i>
+    <span>Settings</span>
+</a>
                     
-                    <a href="setting.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100">
-                        <i class="fas fa-cog w-5"></i>
-                        <span>Settings</span>
-                    </a>
-                    
-                    <a href="export.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-slate-100">
-                        <i class="fas fa-file-export w-5"></i>
-                        <span>Export</span>
-                    </a>
+                    <a href="export.html" class="menu-item flex items-center gap-3 px-4 py-3 rounded-lg text-slate-700 hover:bg-blue-100 hover:text-blue-700">
+    <i class="fas fa-file-export w-5"></i>
+    <span>Export</span>
+</a>
                 </nav>
             </div>
         </aside>
@@ -175,7 +177,7 @@
                 </div>
 
                 <!-- Alert Messages -->
-                <div id="alertContainer" class="mb-8">
+                <div id="alertContainer" class="fixed top-20 right-6 z-50 w-80 space-y-2"></div>
                     <!-- Alerts will appear here -->
                 </div>
             </div>
@@ -183,24 +185,81 @@
     </div>
 
     <script>
+        
+$(document).ready(function(){
+
+let currentPage = window.location.pathname.split("/").pop();
+
+$(".menu-item").each(function(){
+
+let link = $(this).attr("href");
+
+if(link === currentPage){
+
+$(this).addClass("bg-blue-100 text-blue-700 font-medium");
+
+}
+
+});
+
+});
+
+
+    // ============================================================================
+    // MOCK JSON DATA (In production, this would come from your backend API)
+    // ============================================================================
+    const mockInventoryData = {
+        stats: {
+            totalProducts: 128,
+            lowStock: 12,
+            ordersToday: 34,
+            revenue: 12450,
+            thisWeekProducts: 5,
+            thisMonthRevenue: 8.2
+        },
+        salesData: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            sales: [12, 19, 8, 15, 22, 10, 18],
+            purchases: [5, 8, 12, 6, 9, 14, 7]
+        },
+        categoryData: {
+            labels: ['Electronics', 'Clothing', 'Home', 'Toys', 'Other'],
+            data: [45, 25, 15, 8, 12]
+        },
+        recentOrders: [
+            { id: 'ORD-001', customer: 'John Smith', amount: '$450', status: 'Completed', date: '2026-02-12' },
+            { id: 'ORD-002', customer: 'Sarah Johnson', amount: '$320', status: 'Processing', date: '2026-02-12' },
+            { id: 'ORD-003', customer: 'Mike Williams', amount: '$680', status: 'Shipped', date: '2026-02-11' },
+            { id: 'ORD-004', customer: 'Emma Davis', amount: '$250', status: 'Pending', date: '2026-02-11' },
+            { id: 'ORD-005', customer: 'Alex Brown', amount: '$890', status: 'Completed', date: '2026-02-10' }
+        ]
+    };
+
     // ============================================================================
     // JQUERY AJAX FUNCTIONS
     // ============================================================================
 
     // Function to simulate AJAX call to fetch JSON data from server
-   function fetchDashboardData(callback) {
-    $.ajax({
-        url: "data.json",
-        type: "GET",
-        dataType: "json",
-        success: function(data) {
-            callback(data);
-        },
-        error: function(error) {
-            console.error("Error loading JSON:", error);
-        }
-    });
-}
+    function fetchDashboardData(callback) {
+        // This simulates an AJAX call - in production, use $.ajax()
+        $.ajax({
+            url: '#',
+            type: 'GET',
+            dataType: 'json',
+            timeout: 1000,
+            error: function() {
+                // If API call fails, use mock data
+                console.log('Using mock data');
+                callback(mockInventoryData);
+            },
+            success: function(data) {
+                callback(data);
+            }
+        });
+        
+        // For demo purposes, immediately use mock data
+        setTimeout(() => callback(mockInventoryData), 300);
+    }
 
     // Load and render stats cards via jQuery and AJAX
     function loadStatsCards() {
@@ -388,7 +447,30 @@
         $('#sidebar').toggleClass('hidden-mobile');
         $('#overlay').toggleClass('hidden');
     }
+// Alert bell function
+function checkAlerts(){
 
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+
+    const lowStock = inventory.filter(p => p.quantity < 10 && p.quantity > 0);
+    const outStock = inventory.filter(p => p.quantity == 0);
+
+    let message = "";
+
+    if(lowStock.length > 0){
+        message += "⚠️ Low Stock Items: " + lowStock.length + "\n";
+    }
+
+    if(outStock.length > 0){
+        message += "❌ Out Of Stock Items: " + outStock.length + "\n";
+    }
+
+    if(message === ""){
+        message = "✅ All products are sufficiently stocked";
+    }
+
+    alert(message);
+}
     // ============================================================================
     // INITIALIZE DASHBOARD ON PAGE LOAD
     // ============================================================================
@@ -439,5 +521,4 @@
     });
     </script>
 </body>
-
 </html>
