@@ -2,6 +2,7 @@ import { getSessionUser, initializeSessionStorage } from "./session";
 
 initializeSessionStorage();
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "/api";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 async function request(path, options = {}) {
   let response;
@@ -17,7 +18,7 @@ async function request(path, options = {}) {
       ...options,
     });
   } catch (networkError) {
-    throw new Error("Cannot reach backend. Make sure backend is running on port 5000.");
+    throw new Error(`Cannot reach backend. Make sure backend is running at ${BACKEND_URL}.`);
   }
 
   const contentType = response.headers.get("content-type") || "";
