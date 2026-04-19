@@ -7,6 +7,8 @@ export default defineConfig(({ mode }) => {
   const backendUrl = env.VITE_BACKEND_URL || 'http://localhost:5000'
 
   return {
+    base: "/", // ✅ ADD THIS LINE
+
     plugins: [react(), tailwindcss()],
     server: {
       proxy: {
